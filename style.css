@@ -34,6 +34,7 @@ body {
 .app-window__option {
   border: solid 1px black;
   height: 35px;
+  cursor: pointer;
 }
 
 .app-window__option:checked {

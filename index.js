@@ -156,7 +156,7 @@ const apiRepoRequest = new ApiGitHubRequest(
 
 input.addEventListener('input', inputChangeHandler);
 
-select.addEventListener('dblclick', (event) => {
+select.addEventListener('click', (event) => {
   input.value = '';
   select.hidden = true;
   addToFavoriteRepo(event.target.value);
