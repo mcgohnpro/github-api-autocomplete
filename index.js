@@ -10,7 +10,7 @@ const cashedRepos = Object.fromEntries(
 (function () {
   if (Object.keys(cashedRepos).length) {
     for (let id in cashedRepos) {
-      renderFavoriteRepo(id);
+      selectedRepos.appendChild(renderFavoriteRepo(id));
     }
   }
 })();
