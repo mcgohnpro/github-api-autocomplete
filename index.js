@@ -32,7 +32,7 @@ class ApiGitHubRequest {
   request(repoName) {
     this.repos = null;
     if (!repoName) {
-      this.repos = {};
+      this.repos = null;
       return;
     }
     this.url.searchParams.set('q', repoName);
@@ -84,7 +84,7 @@ function showHideSelectElements() {
 function createElementsFromJson(repos) {
   if (repos) {
     let resultItems = document.createDocumentFragment();
-    Object.entries(repos).forEach(([id, { name: name }]) => {
+    Object.entries(repos).forEach(([id, { name }]) => {
       let item = document.createElement('option');
       item.classList.add('app-window__option');
       item.value = id;
@@ -96,24 +96,20 @@ function createElementsFromJson(repos) {
 }
 
 function renderFavoriteRepo(id) {
-  let repo = document.createElement('div');
-  repo.classList.add('selected-repos__wrapper');
-  repo.id = id;
-  repo.insertAdjacentHTML(
-    'beforeend',
-    `
-    <div class="selected-repos__item">
-      <p class="selected-repos__attribute">Name: ${cashedRepos[id]['name']}</p>
-      <p class="selected-repos__attribute">Owner: ${cashedRepos[id]['owner']}</p>
-      <p class="selected-repos__attribute">Stars: ${cashedRepos[id]['stars']}</p>
-    </div>
-    <div class="selected-repos__close close">
-      <span class="close"></span>
-      <span class="close"></span>
-    </div>
-    `,
-  );
-  return repo;
+  const fragment = document
+    .getElementById('text-template')
+    .cloneNode(true).content;
+  fragment.querySelector('.selected-repos__wrapper').id = id;
+  fragment.querySelector(
+    '.selected-repos__attribute:nth-child(1)',
+  ).textContent = `Name: ${cashedRepos[id]['name']}`;
+  fragment.querySelector(
+    '.selected-repos__attribute:nth-child(2)',
+  ).textContent = `Owner: ${cashedRepos[id]['owner']}`;
+  fragment.querySelector(
+    '.selected-repos__attribute:nth-child(3)',
+  ).textContent = `Stars: ${cashedRepos[id]['stars']}`;
+  return fragment;
 }
 
 function addToFavoriteRepo(id) {
